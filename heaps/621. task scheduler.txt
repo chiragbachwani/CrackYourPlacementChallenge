@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char, int> count;
+        
+        for(char task : tasks){
+           count[task]++;
+        }
+
+        priority_queue<int> maxHeap;
+
+        queue<pair<int, int>> queue;
+
+        for(auto entry : count){
+            maxHeap.push(entry.second);
+        }
+
+        int time = 0;
+
+        while(!maxHeap.empty() || !queue.empty()){
+
+            if(!queue.empty() && time >= queue.front().second){
+                maxHeap.push(queue.front().first);
+                queue.pop();
+            }
+
+            if(!maxHeap.empty()){
+                int cnt = maxHeap.top() -1;
+                maxHeap.pop();
+                if(cnt > 0){
+                    queue.push({cnr, time + n+ 1});
+                }
+            }
+            time++;
+        }
+        return time;
+    }
+};
