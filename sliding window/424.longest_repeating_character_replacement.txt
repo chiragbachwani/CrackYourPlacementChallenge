@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char, int> alphabets;
+        int ans = 0;
+        int l =0, r=0, maxf = 0;
+        for(r=0;r<s.size();r++){
+            alphabets[s[r]] = 1+alphabets[s[r]];
+            maxf = max(maxf, alphabets[s[r]]);
+
+            if((r-l+1)-maxf > k){
+                alphabets[s[l]] -= 1;
+                l++;
+            }
+
+            else{
+                ans = max(ans, (r-l+1));
+            }
+        }
+
+        return ans;
+    }
+};
